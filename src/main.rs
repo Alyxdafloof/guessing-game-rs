@@ -3,6 +3,7 @@
 use std::io;
 use rand::Rng;
 use std::cmp::Ordering;
+use colored::*;
 //Functions
 fn main () {
 //calles a new secret number variable using the rand library
@@ -13,7 +14,7 @@ fn main () {
 //starts gameplay loop
 //calls new string var (guess)
 //writes user input to guess with a reference as to not take ownership
-    println!("Hello user, please enter a number~");
+    println!("{}", "Hello user, please enter a number~".blue());
 
     loop {
         let mut guess = String::new();
@@ -27,17 +28,17 @@ fn main () {
         let guess: u32 = match guess.trim().parse() {
             Ok(num) => num,
             Err(_) => {
-                println!("Input a number");
+                println!("{}", "Input a number".red());
                 continue;
             }
         };
 
 
         match guess.cmp(&secret_number) {
-            Ordering::Less => println!("Too Small"),
-            Ordering::Greater => println!("Too Big"),
+            Ordering::Less => println!("{}", "Too Small".red()),
+            Ordering::Greater => println!("{}", " Too Big".red()),
             Ordering::Equal => {
-                println!("Perfect!");
+                println!("{}", " Perfect!".green());
                 break;
             },
         }
