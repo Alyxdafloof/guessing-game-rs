@@ -13,7 +13,6 @@ fn main () {
 //starts gameplay loop
 //calls new string var (guess)
 //writes user input to guess with a reference as to not take ownership
-//then makes guess a u32 int by triming and parsing it, also now making it immutible
     println!("Hello user, please enter a number~");
 
     loop {
@@ -21,7 +20,17 @@ fn main () {
         io::stdin()
             .read_line(&mut guess)
             .expect("Cant read line");
-        let guess: u32 = guess.trim().parse().expect("couldnt trim and parse");
+        
+//Takes the user guess, trims whitespace, parses it into u32
+//if its a valid u32 int, it continues with the rest of the game
+//if it is anything else it forces the user to reinput a number
+        let guess: u32 = match guess.trim().parse() {
+            Ok(num) => num,
+            Err(_) => {
+                println!("Input a number");
+                continue;
+            }
+        };
 
 
         match guess.cmp(&secret_number) {
